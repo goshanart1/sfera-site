@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ООО «Сфера» — монтаж внутренних инженерных систем</title>
+  <meta name="description" content="ООО «Сфера» — строительная инженерная компания. Монтаж внутренних инженерных систем в многоэтажных домах и бизнес-центрах." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #10161f; --ink-soft: #2a3442; --paper: #f6f1e8; --white: #fffcf7;
+      --gold: #c4a06a; --gold-2: #e8d3a8; --line: rgba(16, 22, 31, 0.12);
+      --shadow: 0 24px 60px rgba(16, 22, 31, 0.12);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: Manrope, "Segoe UI", sans-serif; color: var(--ink); background: var(--paper); line-height: 1.55; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font-family: inherit; }
+
+    #intro {
+      position: fixed; inset: 0; z-index: 100;
+      background: #ffffff;
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+      transition: opacity .55s ease, visibility .55s ease;
+    }
+    #intro.done { opacity: 0; visibility: hidden; pointer-events: none; }
+    #intro { animation: hideIntro .6s ease 3.1s forwards; }
+    @keyframes hideIntro { to { opacity: 0; visibility: hidden; pointer-events: none; } }
+    .stage { display: flex; flex-direction: column; align-items: center; transform: translateY(-7vh); }
+    .lockup { position: relative; width: min(90vw, 680px); height: 260px; }
+    .logo-svg { width: 100%; height: 100%; overflow: visible; }
+    .logo-svg .ring {
+      fill: none; stroke: #2c2c2c; stroke-width: 22; stroke-linecap: round;
+      stroke-dasharray: 520; stroke-dashoffset: 520;
+      animation: drawArc 1.15s cubic-bezier(.4,0,.2,1) .15s forwards;
+    }
+    .logo-svg .ch {
+      font-family: Manrope, sans-serif; font-weight: 800; font-size: 78px;
+      fill: #2c2c2c; opacity: 0;
+      animation: slideOut .8s cubic-bezier(.22,.8,.2,1) forwards;
+    }
+    .intro-sub { margin-top: -12px; text-align: center; color: #6d624f; letter-spacing: .22em; text-transform: uppercase; font-size: 13px; font-weight: 700; opacity: 0; animation: subIn .5s ease 1.9s forwards; }
+    @keyframes drawArc { to { stroke-dashoffset: 0; } }
+    @keyframes slideOut { from { opacity: 0; transform: translateX(-50px); } to { opacity: 1; transform: none; } }
+    @keyframes subIn { to { opacity: 1; } }
+    .skip { position: absolute; right: 28px; bottom: 24px; background: transparent; color: rgba(44,44,44,.7); border: 1px solid rgba(44,44,44,.25); border-radius: 999px; padding: 8px 14px; cursor: pointer; letter-spacing: .08em; font-size: 12px; }
+
+    .site { opacity: 0; transform: translateY(12px); transition: opacity .45s ease, transform .45s ease; animation: showSite .5s ease 3.1s forwards; }
+    @keyframes showSite { to { opacity: 1; transform: none; } }
+    .site.show { opacity: 1; transform: none; }
+    header { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 10px 5vw 10px 14px; background: rgba(246,241,232,.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+    .brand { display: flex; align-items: center; gap: 14px; }
+    .logo { height: 96px; width: auto; }
+    .brand span { font-size: 16px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-soft); font-weight: 700; }
+    nav { display: flex; gap: 22px; font-size: 14px; font-weight: 600; }
+    nav a { opacity: .75; } nav a:hover { opacity: 1; }
+    .cta { background: var(--ink); color: var(--paper); border: 0; border-radius: 999px; padding: 12px 18px; font-weight: 700; cursor: pointer; display: inline-block; }
+    .cta.light { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+
+    .hero { display: grid; grid-template-columns: 1.05fr .95fr; min-height: calc(100vh - 74px); }
+    .hero-copy { padding: 8vh 6vw; display: flex; flex-direction: column; justify-content: center; }
+    .eyebrow { letter-spacing: .22em; text-transform: uppercase; font-size: 12px; font-weight: 700; color: #8a6b3e; margin-bottom: 18px; }
+    h1 { font-family: "Cormorant Garamond", serif; font-weight: 600; font-size: clamp(46px, 5.6vw, 78px); line-height: .94; }
+    h1 em { font-style: italic; color: #8a6b3e; }
+    .lead { margin-top: 22px; max-width: 540px; font-size: 18px; color: var(--ink-soft); }
+    .hero-actions { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 48px; max-width: 480px; }
+    .stats b { display: block; font-family: "Cormorant Garamond", serif; font-size: 40px; line-height: 1; }
+    .stats span { font-size: 13px; color: var(--ink-soft); }
+    .hero-photo { position: relative; min-height: 520px; overflow: hidden; }
+    .hero-photo img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; animation: ken 16s ease-in-out infinite alternate; }
+    .hero-card { position: absolute; left: 28px; bottom: 28px; background: rgba(16,22,31,.78); color: #f6f1e8; padding: 18px 20px; border-radius: 18px; max-width: 300px; }
+    .hero-card small { letter-spacing: .14em; text-transform: uppercase; color: var(--gold-2); font-size: 11px; }
+
+    section { padding: 88px 6vw; }
+    .section-head { max-width: 760px; margin-bottom: 36px; }
+    h2 { font-family: "Cormorant Garamond", serif; font-size: clamp(36px, 4vw, 56px); font-weight: 600; line-height: 1; }
+    .section-head p { margin-top: 14px; color: var(--ink-soft); font-size: 17px; }
+    .about { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+    .about img { width: 100%; height: 460px; object-fit: cover; border-radius: 24px; }
+    .pill-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
+    .pill { border: 1px solid var(--line); border-radius: 999px; padding: 8px 12px; font-size: 13px; background: var(--white); }
+    .services { background: var(--ink); color: var(--paper); }
+    .services .section-head p { color: rgba(246,241,232,.72); }
+    .grid-3, .jobs, .team { display: grid; gap: 18px; }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .card { background: rgba(255,252,247,.04); border: 1px solid rgba(255,252,247,.08); border-radius: 20px; padding: 22px; }
+    .card h3 { font-size: 20px; margin: 8px 0; }
+    .card p, .card li { color: rgba(246,241,232,.75); font-size: 15px; }
+    .card ul { margin-left: 16px; }
+    .num { color: var(--gold-2); font-family: "Cormorant Garamond", serif; font-size: 28px; }
+    .partners { width: 100%; border-radius: 20px; background: white; }
+    .gallery { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 200px; gap: 14px; }
+    .gallery figure { position: relative; overflow: hidden; border-radius: 20px; margin: 0; }
+    .gallery img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+    .gallery figure:hover img { transform: scale(1.05); }
+    .gallery figure:first-child { grid-column: auto; grid-row: auto; }
+    .projects { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 18px; }
+    .project { background: var(--white); border-radius: 18px; padding: 18px 20px; border: 1px solid var(--line); }
+    .project b { display: block; margin-bottom: 6px; }
+    .gallery figcaption { position: absolute; left: 14px; bottom: 14px; background: rgba(16,22,31,.72); color: #fff; border-radius: 999px; padding: 6px 12px; font-size: 13px; }
+    .team { grid-template-columns: 1fr 1fr; }
+    .person { background: var(--white); border-radius: 24px; overflow: hidden; box-shadow: var(--shadow); display: grid; grid-template-columns: 180px 1fr; min-height: 260px; cursor: pointer; text-align: left; border: 0; width: 100%; }
+    .avatar { display: flex; align-items: flex-end; justify-content: center; color: white; padding: 16px; font-family: "Cormorant Garamond", serif; font-size: 42px; background: linear-gradient(180deg, rgba(16,22,31,.05), rgba(16,22,31,.5)), url("assets/intro.jpg") center/cover; }
+    .person:nth-child(2) .avatar { background: linear-gradient(180deg, rgba(16,22,31,.05), rgba(16,22,31,.5)), url("assets/avatar-nartov.jpg") center/cover; }
+    .person div { padding: 24px; }
+    .role { color: #8a6b3e; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; }
+    .person h3 { font-family: "Cormorant Garamond", serif; font-size: 34px; line-height: 1; margin: 8px 0 12px; }
+    .person p { color: var(--ink-soft); font-size: 15px; }
+    .hint { margin-top: 12px; font-size: 13px; font-weight: 700; color: #8a6b3e; }
+    .jobs { grid-template-columns: repeat(3, 1fr); }
+    .job { background: var(--white); border-radius: 20px; padding: 22px; border: 1px solid var(--line); }
+    .job b { display: block; font-size: 18px; margin-bottom: 6px; }
+    .job span { color: #8a6b3e; font-size: 13px; font-weight: 700; }
+    .form-wrap { display: grid; grid-template-columns: .8fr 1.2fr; gap: 28px; background: var(--white); border-radius: 28px; padding: 28px; box-shadow: var(--shadow); }
+    form { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    label { display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700; }
+    label.full { grid-column: 1 / -1; }
+    label { min-width: 0; }
+    input, select, textarea { border: 1px solid var(--line); background: var(--paper); border-radius: 12px; padding: 12px 14px; font-size: 15px; color: var(--ink); width: 100%; min-width: 0; }
+    input[type="checkbox"] { width: auto; }
+    textarea { min-height: 120px; resize: vertical; }
+    .check { flex-direction: row; align-items: flex-start; font-weight: 500; gap: 10px; }
+    .submit { grid-column: 1 / -1; background: var(--ink); color: var(--paper); border: 0; border-radius: 14px; padding: 16px; font-weight: 800; cursor: pointer; font-size: 16px; }
+    .ok { display: none; grid-column: 1 / -1; background: #eef6ef; border-radius: 14px; padding: 16px; color: #1d5b34; }
+    .error { color: #9b2c2c; font-size: 12px; font-weight: 600; display: none; }
+    footer { padding: 28px 6vw 40px; display: flex; justify-content: space-between; gap: 12px; color: var(--ink-soft); font-size: 14px; border-top: 1px solid var(--line); }
+    .credit { cursor: pointer; border-bottom: 1px dotted rgba(16,22,31,.35); }
+    .credit:hover { color: var(--ink); border-bottom-color: var(--ink); }
+
+    .mark, .card, .job, .person, .pill { transition: transform .35s ease, box-shadow .35s ease; }
+    .card:hover, .job:hover, .person:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(16,22,31,.16); }
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    .site.show .eyebrow, .site.show h1, .site.show .hero-copy .lead, .site.show .hero-actions, .site.show .stats { animation: riseIn .8s ease both; }
+    .site.show h1 { animation-delay: .1s; } .site.show .hero-copy .lead { animation-delay: .18s; }
+    @keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+    @keyframes ken { to { transform: scale(1.08); } }
+    @keyframes riseIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
+    .modal { position: fixed; inset: 0; z-index: 40; background: rgba(16,22,31,.55); display: none; align-items: center; justify-content: center; padding: 20px; }
+    .modal.open { display: flex; }
+    .sheet { background: var(--white); width: min(640px, 100%); border-radius: 24px; padding: 28px; box-shadow: var(--shadow); position: relative; }
+    .sheet h3 { font-family: "Cormorant Garamond", serif; font-size: 40px; line-height: 1; }
+    .sheet .role { margin: 8px 0 14px; }
+    .sheet p { color: var(--ink-soft); margin-bottom: 10px; }
+    .sheet a { color: #8a6b3e; font-weight: 700; }
+    .close { position: absolute; right: 16px; top: 14px; border: 0; background: transparent; font-size: 28px; cursor: pointer; }
+
+    .bot { }
+    .buddy {
+      width: 118px; height: 150px; border: 0; background: transparent; cursor: pointer; position: relative; padding: 0;
+      animation: hop 2.6s ease-in-out infinite;
+    }
+    .buddy .body {
+      width: 92px; height: 92px; margin: 0 auto; border-radius: 50%; position: relative;
+      background: radial-gradient(circle at 34% 28%, #ffffff 0%, #f4f7fb 42%, #d7e0ea 78%, #b7c4d2 100%);
+      box-shadow: inset -10px -12px 16px rgba(90,110,130,.28), 0 12px 18px rgba(16,22,31,.25);
+    }
+    .shine { position: absolute; left: 18px; top: 12px; width: 28px; height: 16px; border-radius: 50%; background: rgba(255,255,255,.9); transform: rotate(-18deg); }
+    .brow { position: absolute; top: 30px; width: 18px; height: 5px; background: #111; border-radius: 3px; }
+    .brow.l { left: 18px; transform: rotate(-18deg); animation: browL 2.4s ease-in-out infinite; }
+    .brow.r { right: 18px; transform: rotate(18deg); animation: browR 2.4s ease-in-out infinite; }
+    .mouth {
+      position: absolute; left: 22px; top: 42px; width: 48px; height: 28px; background: #fff;
+      border: 3px solid #111; border-radius: 10px 10px 16px 16px; overflow: hidden;
+      display: flex; animation: chatter 1.6s ease-in-out infinite;
+    }
+    .mouth span { flex: 1; border-right: 2px solid #111; }
+    .mouth span:last-child { border-right: 0; }
+    .paw { position: absolute; width: 18px; height: 14px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #fff, #d5dee8); box-shadow: inset -2px -2px 4px rgba(90,110,130,.25); }
+    .paw.l { left: 4px; top: 58px; animation: pawL 2.6s ease-in-out infinite; }
+    .paw.r { right: 4px; top: 58px; animation: pawR 2.6s ease-in-out infinite; }
+    .stick { width: 10px; height: 28px; margin: -4px auto 0; background: linear-gradient(#f7f7f7, #c9a15b); border-radius: 0 0 4px 4px; position: relative; }
+    .stick::before { content: ""; position: absolute; left: -6px; top: -6px; width: 22px; height: 10px; border-radius: 6px; background: linear-gradient(#fff, #d7dee6); }
+    .chat { bottom: 158px; }
+    .chat {
+      position: absolute; right: 0; bottom: 158px; width: 280px; height: 320px;
+      background: #fffdf9; border-radius: 18px; box-shadow: 0 16px 40px rgba(16,22,31,.2);
+      display: none; flex-direction: column; overflow: hidden; border: 1px solid rgba(16,22,31,.08);
+    }
+    .chat.open { display: flex; animation: pop .28s ease; }
+    .chat-top { background: #10161f; color: #f6f1e8; padding: 10px 12px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; }
+    .chat-top button { border: 0; background: transparent; color: #f6f1e8; cursor: pointer; font-size: 18px; }
+    .log { flex: 1; overflow: auto; padding: 10px; display: flex; flex-direction: column; gap: 8px; background: #f7f3ec; }
+    .msg { max-width: 88%; padding: 8px 10px; border-radius: 12px; font-size: 13px; }
+    .msg.bot { background: white; align-self: flex-start; }
+    .msg.me { background: #10161f; color: #f6f1e8; align-self: flex-end; }
+    .ask { display: flex; gap: 6px; padding: 8px; border-top: 1px solid var(--line); }
+    .ask input { flex: 1; min-width: 0; }
+    .ask button { border: 0; background: #10161f; color: white; border-radius: 10px; padding: 0 10px; cursor: pointer; font-weight: 700; }
+    .pill { animation: pillIn .6s ease both; }
+    .num { display: inline-block; animation: numPulse 2.8s ease-in-out infinite; }
+    .hero-card { animation: cardIn 1s ease .4s both; }
+    @keyframes hop { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    @keyframes browL { 0%, 100% { transform: rotate(-18deg); } 50% { transform: rotate(-28deg) translateY(-1px); } }
+    @keyframes browR { 0%, 100% { transform: rotate(18deg); } 50% { transform: rotate(28deg) translateY(-1px); } }
+    @keyframes chatter { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(.86); } }
+    @keyframes pawL { 0%, 100% { transform: rotate(8deg); } 50% { transform: rotate(-16deg) translateY(-3px); } }
+    @keyframes pawR { 0%, 100% { transform: rotate(-8deg); } 50% { transform: rotate(16deg) translateY(-3px); } }
+    @keyframes pop { from { opacity: 0; transform: translateY(8px) scale(.96); } to { opacity: 1; transform: none; } }
+    @keyframes pillIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    @keyframes numPulse { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+    @keyframes cardIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+    @media (max-width: 980px) {
+      nav { display: none; }
+      .hero, .about, .form-wrap, .team, .grid-3, .jobs { grid-template-columns: 1fr; }
+      .gallery { grid-template-columns: 1fr; grid-template-rows: none; }
+      .gallery figure, .gallery figure:first-child { height: 230px; grid-row: auto; }
+      .projects { grid-template-columns: 1fr; }
+      .hero-photo { min-height: 360px; }
+      .person { grid-template-columns: 1fr; }
+      .avatar { min-height: 150px; }
+      form { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div id="intro">
+    <div class="stage">
+      <div class="lockup">
+        <svg class="logo-svg" viewBox="0 0 680 260" aria-label="Сфера">
+          <path class="ring" d="M 292 62 A 100 100 0 1 0 292 198" />
+          <text class="ch" x="180" y="156" style="animation-delay:1.2s">С</text>
+          <text class="ch" x="246" y="156" style="animation-delay:1.34s">Ф</text>
+          <text class="ch" x="318" y="156" style="animation-delay:1.48s">Е</text>
+          <text class="ch" x="382" y="156" style="animation-delay:1.62s">Р</text>
+          <text class="ch" x="446" y="156" style="animation-delay:1.76s">А</text>
+        </svg>
+      </div>
+      <div class="intro-sub">инженерная компания</div>
+    </div>
+    <button class="skip" type="button" id="skip">Пропустить</button>
+  </div>
+
+  <div class="site" id="site">
+    <header>
+      <a class="brand" href="#top"><img class="logo" src="assets/logo.png" alt="Сфера" /><span>инженерные системы</span></a>
+      <nav>
+        <a href="#about">О компании</a>
+        <a href="#systems">Системы</a>
+        <a href="#work">Объекты</a>
+        <a href="#team">Команда</a>
+        <a href="#jobs">Вакансии</a>
+      </nav>
+      <a class="cta" href="#anketa">Анкета</a>
+    </header>
+    <main id="top">
+      <section class="hero" style="padding:0">
+        <div class="hero-copy">
+          <div class="eyebrow">Монтаж внутренних инженерных систем</div>
+          <h1>Найди своё место <em>в Сфере</em></h1>
+          <p class="lead">ООО «Сфера» — строительная инженерная компания. С 7 августа 2023 года монтируем внутренние инженерные системы в многоэтажных жилых домах и бизнес-центрах: отопление, вентиляцию, водопровод, канализацию, электрику и слаботочные системы.</p>
+          <div class="hero-actions">
+            <a class="cta" href="#anketa">Заполнить анкету</a>
+            <a class="cta light" href="#systems">Что монтируем</a>
+          </div>
+          <div class="stats">
+            <div><b>2023</b><span>год основания · 7 августа</span></div>
+            <div><b data-count="86" data-suffix="+">0</b><span>секций и корпусов</span></div>
+            <div><b data-count="140">0</b><span>инженеров и монтажников</span></div>
+          </div>
+        </div>
+        <div class="hero-photo">
+          <img src="assets/hero.jpg" alt="Воздуховоды на кровле" />
+          <div class="hero-card"><small>Объект компании</small><div>Монтаж вентиляции на кровле 45-ти этажного дома</div></div>
+        </div>
+      </section>
+
+      <section id="about">
+        <div class="about">
+          <img src="assets/about.jpg" alt="Инженерные сети паркинга" / loading="lazy" decoding="async">
+          <div>
+            <div class="eyebrow">О компании</div>
+            <h2>Не строим коробку — собираем инженерию внутри</h2>
+            <p class="lead">Работаем на каркасе заказчика и генподрядчика. Берём этаж, секцию или весь корпус: от закладных и стояков до пусконаладки и исполнительных схем. Жилые дома, многоуровневые паркинги, промышленные помещения, торговые центры, муниципальные учреждения и офисные башни.</p>
+            <div class="pill-row">
+              <span class="pill">ОВ и ВК</span><span class="pill">Электрика</span><span class="pill">Слабые токи</span><span class="pill">Дымоудаление</span><span class="pill">ИТП</span><span class="pill">ПНР</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="services" id="systems">
+        <div class="section-head">
+          <div class="eyebrow" style="color:#e8d3a8">Состав работ</div>
+          <h2>Внутренние инженерные системы под ключ</h2>
+          <p>Проект, поставка, монтаж, испытания и сдача эксплуатирующей организации.</p>
+        </div>
+        <div class="grid-3">
+          <article class="card"><div class="num">01</div><h3>Отопление и ИТП</h3><p>Стояки, поэтажная разводка, радиаторы, тёплый пол, узлы учёта и тепловые пункты.</p></article>
+          <article class="card"><div class="num">02</div><h3>Вентиляция и кондиционирование</h3><p>Воздуховоды, венткамеры, чиллеры, фанкойлы, дымоудаление паркингов и коридоров.</p></article>
+          <article class="card"><div class="num">03</div><h3>Вода и канализация</h3><p>В1, Т3, Т4, К1, К2. Стояки, гребенки, насосные и ливневка стилобата.</p></article>
+          <article class="card"><div class="num">04</div><h3>Электроснабжение</h3><p>ВРУ, этажные щиты, кабельные лотки, освещение МОП и квартир, заземление.</p></article>
+          <article class="card"><div class="num">05</div><h3>Слабые токи и АПС</h3><p>СКС, домофон, СКУД, пожарная сигнализация и оповещение.</p></article>
+          <article class="card"><div class="num">06</div><h3>ПНР и исполнительная</h3><p>Промывка, опрессовка, балансировка, паспорта и схемы для УК и заказчика.</p></article>
+        </div>
+      </section>
+
+      <section id="work">
+        <div class="section-head">
+          <div class="eyebrow">Объекты</div>
+          <h2>Дома и бизнес-центры</h2>
+          <p>Кадры с монтажных зон: шахты, венткамеры, щитовые и готовые этажи.</p>
+        </div>
+        <div class="gallery">
+          <figure><img src="assets/hero.jpg" alt="Кровля, воздуховоды" /><figcaption>Кровля, ОВ</figcaption></figure>
+          <figure><img src="assets/gallery-1.jpg" alt="Разводка отопления" / loading="lazy" decoding="async"><figcaption>Стояки и разводка</figcaption></figure>
+          <figure><img src="assets/about.jpg" alt="Паркинг" / loading="lazy" decoding="async"><figcaption>Сети паркинга</figcaption></figure>
+          <figure><img src="assets/gallery-2.jpg" alt="Лобби" / loading="lazy" decoding="async"><figcaption>Готовый лобби</figcaption></figure>
+          <figure><img src="assets/gallery-3.jpg" alt="Сфера" / loading="lazy" decoding="async"><figcaption>Жилые комплексы</figcaption></figure>
+          <figure><img src="assets/gallery-4.jpg" alt="Объект" / loading="lazy" decoding="async"><figcaption>Монтаж</figcaption></figure>
+          <figure><img src="assets/gallery-5.jpg" alt="Инженерия" / loading="lazy" decoding="async"><figcaption>Сети</figcaption></figure>
+          <figure><img src="assets/gallery-6.jpg" alt="Работы" / loading="lazy" decoding="async"><figcaption>Площадка</figcaption></figure>
+        </div>
+        <div class="projects">
+          <article class="project"><b>ЖК, Озёрная, корпус 4</b><p>Москва, ЗАО, Очаково-Матвеевское. 45 этажей, 23 000 м². Завершён 01.04.2025, ЗОС и РВ.</p></article>
+          <article class="project"><b>Паркинг, Озёрная</b><p>Три уровня, 400 машиномест. Завершён 01.10.2025, ЗОС и РВ.</p></article>
+          <article class="project"><b>Реновация, Большая Почтовая, 18</b><p>ЦАО, Басманный район. 20 этажей, 10 000 м². Завершён 01.11.2025.</p></article>
+          <article class="project"><b>Корпус А, Большая Почтовая, 18</b><p>15–22 этажа, 18 000 м². Завершён 01.11.2025, ЗОС и РВ.</p></article><article class="project"><b>ЖК «Соул»</b><p>ул. Часовая, 28, Корпус 6. 6 секций до 8 этажей, 21 500 м². Завершение — 31.03.2027. <a href="https://soul.forma.ru/visual/unique/6" target="_blank" rel="noopener" style="color:#8a6b3e;font-weight:700">soul.forma.ru</a></p></article>
+        </div>
+      </section>
+      <section id="partners">
+        <div class="section-head">
+          <div class="eyebrow">С исходного сайта</div>
+          <h2>Наши партнёры</h2>
+          <p>ПИК, OZEM, LUIS+, VENTZ, FORMA, ЭТМ, MEL, Водокомфорт, Сатро-Паладин, Level, PAT AIR, РемКреп, Русский Свет, Фасадные решения, Sminex.</p>
+        </div>
+        <img class="partners" src="assets/partners.jpg" alt="Партнёры Сферы" / loading="lazy" decoding="async">
+      </section>
+
+      <section id="team" style="background:#efe7da">
+        <div class="section-head">
+          <div class="eyebrow">Создатели</div>
+          <h2>Кто ведёт компанию</h2>
+        </div>
+        <div class="team">
+          <button class="person" type="button" data-person="dv">
+            <div class="avatar">ДВ</div>
+            <div>
+              <div class="role">Генеральный директор</div>
+              <h3>Дмитрий Владимирович</h3>
+              <p>Человек, который каждый день отвечает за работу компании. Он руководит командой, следит за качеством и помогает решать важные задачи. Его цель — чтобы компания развивалась, а клиенты оставались довольны.</p>
+              <div class="hint">Открыть контакты</div>
+            </div>
+          </button>
+          <button class="person" type="button" data-person="gn">
+            <div class="avatar">ГН</div>
+            <div>
+              <div class="role">Главный инженер</div>
+              <h3>Геннадий Нартов</h3>
+              <p>Это человек, который превращает сложные технические задачи в работающие решения.</p>
+              <div class="hint">Открыть контакты</div>
+            </div>
+          </button>
+        </div>
+      </section>
+
+      <section id="jobs">
+        <div class="section-head">
+          <div class="eyebrow">Набор</div>
+          <h2>Кого берём на объекты</h2>
+          <p>Монтаж внутренних инженерных систем в жилых секциях и бизнес-центрах. Оформление по ТК.</p>
+        </div>
+        <div class="jobs">
+          <article class="job"><span>ОВиК (Вентиляция)</span><b>Монтажник систем вентиляции и кондиционирования</b><p>Воздуховоды, венткамеры, оборудование.</p></article><article class="job"><span>ВК (Сантехника)</span><b>Монтажник сантехнических систем</b><p>Стояки, обвязка ИТП, сварка трубопроводов: НАКС, сталь и закладные.</p></article>
+          <article class="job"><span>Электрика</span><b>Электромонтажник</b><p>Лотки, кабель, щиты, группа допуска.</p></article>
+          <article class="job"><span>Участок</span><b>Производитель работ</b><p>Организует монтаж на участке: расстановка бригад, контроль сроков и качества, взаимодействие с генподрядчиком, журнал работ и сдача секции.</p></article>
+          <article class="job"><span>ПТО</span><b>Инженер ПТО</b><p>Исполнительная по ОВиК, ВК, ЭОМ и слаб. сист.</p></article>
+          <article class="job"><span>Наладка</span><b>Инженер ПНР</b><p>Опрессовка, балансировка, паспорта.</p></article>
+          
+        </div>
+      </section>
+
+      <section id="anketa">
+        <div class="form-wrap">
+          <div>
+            <div class="eyebrow">Анкета</div>
+            <h2>Расскажите, какую систему монтировали</h2>
+            <p class="lead">Отдел кадров: info@sfera-build.ru · +7 967 128-42-07 · Москва, ул. Верейская, д. 29 стр. 33.</p>
+          </div>
+          <form id="form" novalidate>
+            <label>ФИО *<input name="name" required placeholder="Иванов Иван Иванович" /><span class="error" data-for="name">Укажите фамилию и имя</span></label>
+            <label>Телефон *<input name="phone" required placeholder="+7 900 000-00-00" /><span class="error" data-for="phone">Нужен телефон</span></label>
+            <label>Эл. почта *<input name="email" type="email" required placeholder="name@mail.ru" /><span class="error" data-for="email">Проверьте почту</span></label>
+            <label>Город<input name="city" placeholder="Москва" /></label>
+            <label>Должность *<select name="role" required><option value="">Выберите</option><option>Монтажник систем вентиляции и кондиционирования</option><option>Монтажник сантехнических систем</option><option>Электромонтажник</option><option>Производитель работ</option><option>Инженер ПТО</option><option>Инженер ПНР</option><option>Другое</option></select><span class="error" data-for="role">Выберите должность</span></label>
+            <label>Опыт, лет<input name="years" type="number" min="0" max="50" placeholder="5" /></label>
+            <label class="full">Допуски<input name="edu" placeholder="НАКС, группа по электробезопасности, высота" /></label>
+            <label class="full">Объекты<textarea name="about" placeholder="Дома, бизнес-центры, какие системы сдавали"></textarea></label>
+            <label class="check full"><input type="checkbox" name="agree" required /><span>Согласен на обработку данных для анкеты ООО «Сфера»</span></label>
+            <span class="error full" data-for="agree">Нужно согласие</span>
+            <button class="submit" type="submit">Отправить анкету</button>
+            <div class="ok" id="ok">Анкета принята. Отдел кадров свяжется с вами.</div>
+          </form>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div>ООО «Сфера» · Москва, ул. Верейская, 29 стр. 33 · +7 967 128-42-07 · info@sfera-build.ru</div>
+      <div class="credit" id="credit" role="button" tabindex="0">Designed by Nartov George</div>
+    </footer>
+  </div>
+
+  <div class="modal" id="modal">
+    <div class="sheet">
+      <button class="close" type="button" id="close">×</button>
+      <div class="role" id="m-role"></div>
+      <h3 id="m-name"></h3>
+      <p id="m-about"></p>
+      <p id="m-phone"></p>
+      <p id="m-mail"></p>
+    </div>
+  </div>
+
+  <script>
+    const intro = document.getElementById("intro");
+    const site = document.getElementById("site");
+    function openSite() {
+      if (intro) intro.classList.add("done");
+      if (site) site.classList.add("show");
+    }
+    const skip = document.getElementById("skip");
+    if (skip) skip.onclick = openSite;
+    setTimeout(openSite, 2800);
+    setTimeout(function(){ var o=document.getElementById('orb-wrap'); if(o) o.classList.add('show'); }, 3200);
+
+    const people = {
+      dv: {
+        role: "Генеральный директор",
+        name: "Дмитрий Владимирович",
+        about: "Генеральный директор — человек, который каждый день отвечает за работу компании. Он руководит командой, следит за качеством и помогает решать важные задачи. Его цель — чтобы компания развивалась, а клиенты оставались довольны.",
+        phone: "Рабочий телефон: +7 (495) 120-10-16",
+        mail: "Почта: prutskovdv@sfera-build.ru"
+      },
+      gn: {
+        role: "Главный инженер",
+        name: "Геннадий Нартов",
+        about: "Главный инженер — это человек, который превращает сложные технические задачи в работающие решения. Он знает, как всё устроено, находит выход из непростых ситуаций и следит за тем, чтобы каждая деталь была на своём месте.",
+        phone: "Рабочий телефон: +7 (495) 120-10-18",
+        mail: "Почта: nartovgn@sfera-build.ru"
+      }
+    };
+    const modal = document.getElementById("modal");
+    document.querySelectorAll("[data-person]").forEach((btn) => btn.addEventListener("click", () => {
+      const p = people[btn.dataset.person];
+      document.getElementById("m-role").textContent = p.role;
+      document.getElementById("m-name").textContent = p.name;
+      document.getElementById("m-about").textContent = p.about;
+      document.getElementById("m-phone").style.display = "";
+      document.getElementById("m-mail").style.display = "";
+      document.getElementById("m-phone").innerHTML = p.phone;
+      document.getElementById("m-mail").textContent = p.mail;
+      modal.classList.add("open");
+    }));
+    document.getElementById("close").onclick = () => modal.classList.remove("open");
+    modal.addEventListener("click", (e) => { if (e.target === modal) modal.classList.remove("open"); });
+
+    const credit = document.getElementById("credit");
+    if (credit) {
+      const openCredit = () => {
+        document.getElementById("m-role").textContent = "Разработка ПО";
+        document.getElementById("m-name").textContent = "Георгий Нартов";
+        document.getElementById("m-about").textContent = "Георгий занимается проектированием и созданием разнопланового программного обеспечения для нашей компании. В центре его работы всегда стоит человек: каждый продукт разрабатывается с заботой о пользователе, чтобы сделать повседневные задачи проще, удобнее и эффективнее. Благодаря экспертизе и профессиональному подходу Георгия, ООО «Сфера» успешно внедряет надежные, современные и интуитивно понятные цифровые инструменты, ориентированные на реальные потребности людей.";
+        document.getElementById("m-phone").textContent = "";
+        document.getElementById("m-mail").textContent = "";
+        document.getElementById("m-phone").style.display = "none";
+        document.getElementById("m-mail").style.display = "none";
+        modal.classList.add("open");
+      };
+      credit.onclick = openCredit;
+      credit.onkeydown = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openCredit(); } };
+    }
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("in");
+        io.unobserve(entry.target);
+        entry.target.querySelectorAll("[data-count]").forEach(countUp);
+      });
+    }, { threshold: 0.18 });
+    document.querySelectorAll(".section-head, .card, .job, .person, .gallery figure, .about img, .about > div, .form-wrap, .pill, .stats").forEach((el, i) => {
+      el.classList.add("reveal");
+      el.style.transitionDelay = (i % 5) * 0.07 + "s";
+      io.observe(el);
+    });
+    function countUp(el) {
+      const target = Number(el.dataset.count);
+      const suffix = el.dataset.suffix || "";
+      const start = performance.now();
+      (function tick(now) {
+        const p = Math.min(1, (now - start) / 900);
+        el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+      })(start);
+    }
+
+    const form = document.getElementById("form");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      let valid = true;
+      form.querySelectorAll(".error").forEach((el) => (el.style.display = "none"));
+      const data = Object.fromEntries(new FormData(form).entries());
+      const fail = (name) => { valid = false; const el = form.querySelector('[data-for="' + name + '"]'); if (el) el.style.display = "block"; };
+      if (!data.name || data.name.trim().length < 3) fail("name");
+      if (!data.phone || data.phone.trim().length < 6) fail("phone");
+      if (!data.email || !data.email.includes("@")) fail("email");
+      if (!data.role) fail("role");
+      if (!form.agree.checked) fail("agree");
+      if (!valid) return;
+      const list = JSON.parse(localStorage.getItem("sfera-ankety") || "[]");
+      list.push({ ...data, sent: new Date().toISOString() });
+      localStorage.setItem("sfera-ankety", JSON.stringify(list));
+      form.reset();
+      document.getElementById("ok").style.display = "block";
+    });
+  </script>
+
+<style id="orb-css">
+  #orb-wrap{position:fixed;right:24px;bottom:24px;z-index:500;font-family:Manrope,"Segoe UI",sans-serif;opacity:0;pointer-events:none;transform:translateY(16px);animation:orbAppear .4s ease 3.2s forwards}
+  @keyframes orbAppear{to{opacity:1;pointer-events:auto;transform:none}}
+  #orb-wrap.show{opacity:1;pointer-events:auto;transform:none}
+  #orb{width:78px;height:78px;border-radius:50%;border:0;cursor:pointer;position:relative;padding:0;
+    background:radial-gradient(circle at 32% 26%,#fff 0%,#fbf8f2 45%,#e9e2d3 100%);
+    box-shadow:0 14px 34px rgba(16,22,31,.28),inset -6px -8px 14px rgba(16,22,31,.08),inset 4px 4px 10px #fff;
+    animation:orbFloat 4s ease-in-out infinite, orbPulse 3.2s ease-in-out infinite;transition:transform .2s}
+  #orb:hover{transform:scale(1.1) rotate(-4deg)}
+  #orb:active{transform:scale(.92)}
+  #orb::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:2px solid rgba(16,22,31,.12);
+    animation:orbRing 2.8s ease-out infinite}
+  @keyframes orbFloat{0%,100%{translate:0 0}50%{translate:0 -8px}}
+  @keyframes orbPulse{0%,100%{box-shadow:0 14px 34px rgba(16,22,31,.28),inset -6px -8px 14px rgba(16,22,31,.08),inset 4px 4px 10px #fff}
+    50%{box-shadow:0 18px 40px rgba(16,22,31,.34),inset -6px -8px 14px rgba(16,22,31,.08),inset 4px 4px 10px #fff}}
+  @keyframes orbRing{0%{transform:scale(.85);opacity:.7}100%{transform:scale(1.25);opacity:0}}
+  .orb-eye{position:absolute;top:29px;width:11px;height:15px;background:#10161f;border-radius:50%;
+    animation:orbBlink 5s infinite, orbLook 7s ease-in-out infinite;transform-origin:center}
+  .orb-eye.l{left:20px}.orb-eye.r{right:20px}
+  .orb-eye.r{animation-delay:.05s, .4s}
+  .orb-eye i{position:absolute;top:2px;left:2px;width:4px;height:4px;background:#fff;border-radius:50%;animation:pupil 7s ease-in-out infinite}
+  @keyframes orbBlink{0%,90%,100%{transform:scaleY(1)}94%{transform:scaleY(.08)}}
+  @keyframes orbLook{0%,100%{translate:0 0}20%{translate:1px -1px}45%{translate:-1px 1px}70%{translate:0 0}}
+  @keyframes pupil{0%,100%{translate:0 0}20%{translate:1.5px -1px}45%{translate:-1.5px 1px}70%{translate:0 0}}
+  .orb-mouth{position:absolute;left:50%;top:52px;width:22px;height:9px;margin-left:-11px;
+    border-bottom:3px solid #10161f;border-radius:0 0 22px 22px;transition:all .12s;animation:orbSmile 6s ease-in-out infinite}
+  @keyframes orbSmile{0%,100%{width:22px;margin-left:-11px}50%{width:26px;margin-left:-13px}}
+  #orb.talk .orb-mouth{animation:orbTalk .28s ease-in-out infinite alternate}
+  @keyframes orbTalk{from{height:3px;width:16px;margin-left:-8px;border-radius:0 0 16px 16px}
+    to{height:13px;width:15px;margin-left:-7.5px;border:3px solid #10161f;border-radius:50%;background:#7a2f2f}}
+  #orb-panel{position:absolute;right:24px;bottom:96px;width:420px;height:600px;max-width:calc(100vw - 48px);
+    background:#fffcf7;border-radius:22px;box-shadow:0 30px 70px rgba(16,22,31,.3);border:1px solid rgba(16,22,31,.1);
+    display:none;flex-direction:column;overflow:hidden;transform-origin:bottom right}
+  #orb-wrap.open #orb-panel{display:flex !important;animation:panIn .25s ease}
+  @keyframes panIn{from{opacity:0;transform:scale(.92) translateY(10px)}to{opacity:1;transform:none}}
+  .op-head{display:flex;align-items:center;gap:10px;padding:14px 16px;background:#10161f;color:#f6f1e8}
+  .op-head b{font-size:15px;display:block}.op-head span{font-size:11px;color:#e8d3a8;letter-spacing:.06em}
+  .op-close{margin-left:auto;background:none;border:0;color:#f6f1e8;font-size:24px;cursor:pointer;line-height:1}
+  #op-log{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;background:#f6f1e8}
+  .m{max-width:88%;padding:10px 13px;border-radius:16px;font-size:14px;line-height:1.5;white-space:pre-line;color:#10161f}
+  .m.bot{background:#fff;border:1px solid rgba(16,22,31,.1);border-bottom-left-radius:4px;align-self:flex-start}
+  .m.me{background:#10161f;color:#f6f1e8;border-bottom-right-radius:4px;align-self:flex-end}
+  .m a{color:#8a6b3e;font-weight:700;text-decoration:underline}
+  .op-chips{display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px 0;background:#fffcf7;max-height:104px;overflow-y:auto}
+  .op-chips button{border:1px solid rgba(16,22,31,.2);background:#fff;border-radius:999px;padding:6px 11px;font-size:12px;font-weight:600;cursor:pointer;color:#10161f}
+  .op-chips button:hover{background:#10161f;color:#f6f1e8}
+  .op-form{display:flex;gap:8px;padding:10px 12px 12px;background:#fffcf7}
+  .op-form input{flex:1;border:1px solid rgba(16,22,31,.2);border-radius:999px;padding:10px 14px;font-size:14px;outline:none;background:#fff}
+  .op-form input:focus{border-color:#c4a06a}
+  .op-form button{border:0;background:#10161f;color:#f6f1e8;border-radius:999px;padding:0 16px;font-weight:700;cursor:pointer}
+  @media(max-width:520px){#orb-wrap{right:14px;bottom:14px}#orb-panel{right:14px;bottom:92px;width:calc(100vw - 28px);max-width:calc(100vw - 28px);height:min(560px,calc(100vh - 120px));}}
+</style>
+
+<div id="orb-wrap">
+  <div id="orb-panel" role="dialog" aria-label="Помощник Сфера">
+    <div class="op-head">
+      <div style="width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 32% 26%,#fff,#e9e2d3);position:relative;flex:none">
+        <i style="position:absolute;left:9px;top:12px;width:4px;height:6px;background:#10161f;border-radius:50%"></i>
+        <i style="position:absolute;right:9px;top:12px;width:4px;height:6px;background:#10161f;border-radius:50%"></i>
+        <i style="position:absolute;left:11px;top:21px;width:12px;height:5px;border-bottom:2px solid #10161f;border-radius:0 0 12px 12px"></i>
+      </div>
+      <div><b>Сфера-помощник</b><span>ВСЁ О САЙТЕ И КОМПАНИИ</span></div>
+      <button class="op-close" id="op-close" aria-label="Закрыть">×</button>
+    </div>
+    <div id="op-log"></div>
+    <div class="op-chips" id="op-chips"></div>
+    <form class="op-form" id="op-form">
+      <input id="op-input" placeholder="Спросите о компании…" autocomplete="off" />
+      <button type="submit">→</button>
+    </form>
+  </div>
+  <button id="orb" type="button" aria-label="Открыть помощника" onclick="var w=document.getElementById('orb-wrap'),p=document.getElementById('orb-panel');if(!w||!p)return;if(w.classList.contains('open')){w.classList.remove('open');p.style.display='none';}else{w.classList.add('open');p.style.display='flex';}">
+    <span class="orb-eye l"><i></i></span><span class="orb-eye r"><i></i></span>
+    <span class="orb-mouth"></span>
+  </button>
+</div>
+
+<script id="orb-js">
+(function(){
+  var wrap=document.getElementById('orb-wrap'),orb=document.getElementById('orb'),
+      log=document.getElementById('op-log'),chips=document.getElementById('op-chips'),
+      form=document.getElementById('op-form'),inp=document.getElementById('op-input');
+  var PHONE='<a href="tel:+79671284207">+7 967 128-42-07</a>', MAIL='<a href="mailto:info@sfera-build.ru">info@sfera-build.ru</a>';
+
+  var greeted=false;
+  function openChat(){
+    if(!wrap) return;
+    wrap.classList.add('open');
+    var panel=document.getElementById('orb-panel');
+    if(panel){ panel.style.display='flex'; panel.style.zIndex='501'; }
+    if(!greeted && log){greeted=true;
+      var d=document.createElement('div'); d.className='m bot';
+      d.textContent='Привет! Я помощник сайта ООО «Сфера». Могу рассказать о компании, системах, объектах, команде, вакансиях и контактах. Выберите тему или напишите вопрос.';
+      log.appendChild(d);
+    }
+    if(inp) setTimeout(function(){inp.focus()},50);
+  }
+  function closeChat(){
+    if(!wrap) return;
+    wrap.classList.remove('open');
+    var panel=document.getElementById('orb-panel');
+    if(panel){ panel.style.display='none'; }
+  }
+  window.sferaOpen=function(){
+    if(wrap && wrap.classList.contains('open')) closeChat(); else openChat();
+  };
+  if(orb){
+    orb.onclick=function(){ window.sferaOpen && window.sferaOpen(); };
+  }
+  var closer=document.getElementById('op-close');
+  if(closer) closer.addEventListener('click', function(e){ e.preventDefault(); closeChat(); });
+
+  var KB={
+   about:{t:'О компании',k:'компан сфера о вас кто вы чем занима расскажи',a:'ООО «Сфера» — строительная инженерная компания. Основана 7 августа 2023 года. Монтируем внутренние инженерные системы в многоэтажных жилых домах , паркингах, промышленных помещениях, торговых центрах, муниципальных учреждениях и офисных башнях.\n\nРаботаем на каркасе заказчика и генподрядчика: берём этаж, секцию или весь корпус — от закладных и стояков до пусконаладки и исполнительных схем.\n\nВ цифрах: с 7 августа 2023 года на объектах, 86+ секций и корпусов, 140 инженеров и монтажников.'},
+   systems:{t:'Что монтируем',k:'систем монтаж работ услуг состав отопл вентил вод канализ электр слаб ток апс пнр ?итп',a:'Внутренние инженерные системы под ключ — проект, поставка, монтаж, испытания и сдача эксплуатирующей организации:\n\n01 · Отопление и ИТП — стояки, поэтажная разводка, радиаторы, тёплый пол, узлы учёта, тепловые пункты.\n02 · Вентиляция и кондиционирование — воздуховоды, венткамеры, чиллеры, фанкойлы, дымоудаление паркингов и коридоров.\n03 · Вода и канализация — В1, Т3, Т4, К1, К2, стояки, гребенки, насосные, ливневка стилобата.\n04 · Электроснабжение — ВРУ, этажные щиты, кабельные лотки, освещение МОП и квартир, заземление.\n05 · Слабые токи и АПС — СКС, домофон, СКУД, пожарная сигнализация и оповещение.\n06 · ПНР и исполнительная — промывка, опрессовка, балансировка, паспорта и схемы для УК и заказчика.'},
+   projects:{t:'Объекты',k:'объект проект жк дом паркинг озёрн озерн почтов реновац корпус построил сдан завершен',a:'Примеры объектов:\n\n• ЖК «Озёрная», корпус 4 — Москва, ЗАО, Очаково-Матвеевское. 45 этажей, 23 000 м². Завершён 01.04.2025, ЗОС и РВ.\n• Паркинг, Озёрная — три уровня, 400 машиномест. Завершён 01.10.2025, ЗОС и РВ.\n• Реновация, Большая Почтовая, 18 — ЦАО, Басманный район. 20 этажей, 10 000 м². Завершён 01.11.2025.\n• Корпус А, Большая Почтовая, 18 — 15–22 этажа, 18 000 м². Завершён 01.11.2025, ЗОС и РВ.\n• ЖК «Соул» — ул. Часовая, 28, корпус 6. 6 секций до 8 этажей, 21 500 м². Завершение 31.03.2027.\n\nВ галерее раздела «Объекты» — кадры с монтажных зон: шахты, венткамеры, щитовые и готовые этажи.'},
+   partners:{t:'Партнёры',k:'партнёр партнер поставщик пик ozem luis ventz forma этм mel sminex',a:'Наши партнёры: ПИК, OZEM, LUIS+, VENTZ, FORMA, ЭТМ, MEL, Водокомфорт, Сатро-Паладин, Level, PAT AIR, РемКреп, Русский Свет, Фасадные решения, Sminex.'},
+   team:{t:'Руководство',k:'команд руковод директор создател основател нартов владимирович главн инженер кто ведёт ведет',a:'Компанию ведут двое создателей:\n\n👤 Дмитрий Владимирович — генеральный директор. Основал «Сферу» 7 августа 2023 года. Ведёт договоры с генподрядчиками и девелоперами, график объектов и набор руководителей; решает вопросы сроков сдачи секций и состава бригад.\nТел.: +7 (495) 120-10-16 · prutskovdv@sfera-build.ru\n\n👤 Геннадий Нартов — главный инженер. Отвечает за ППР, узлы ОВ и ВК, электрику, испытания и исполнительную документацию; лично закрывает тепловые пункты, венткамеры и вводные устройства.\nТел.: +7 (495) 120-10-18 · nartovgn@sfera-build.ru\n\nНа сайте их карточки в разделе «Команда» открываются по клику.'},
+   jobs:{t:'Вакансии',k:'ваканс работ трудоустр найм набор берёте берете устро должност зарплат тк оформлен',a:'Берём на объекты (оформление по ТК):\n\n• Монтажник систем вентиляции и кондиционирования (ОВиК) — воздуховоды, венткамеры, оборудование\n• Монтажник сантехнических систем (ВК) — стояки, обвязка ИТП, сварка трубопроводов: НАКС, сталь и закладные\n• Электромонтажник — лотки, кабель, щиты, группа допуска\n• Производитель работ — организация монтажа на участке: бригады, сроки, качество, журнал и сдача\n• Инженер ПТО — исполнительная по ОВиК, ВК, ЭОМ и слаб. сист.\n• Инженер ПНР — опрессовка, балансировка, паспорта\n\nЧтобы откликнуться, заполните анкету внизу сайта.'},
+   form:{t:'Как подать анкету',k:'анкет откликн заполн отправ резюме форма подать',a:'Анкета — в самом низу сайта (кнопка «Анкета» в шапке). Поля:\n\n• ФИО*, телефон*, эл. почта*, должность* (обязательные)\n• Город, опыт в годах, допуски (НАКС, электробезопасность, высота), объекты, где работали\n• Галочка согласия на обработку данных*\n\nПосле отправки отдел кадров свяжется с вами.',go:'#anketa'},
+   contacts:{t:'Контакты',k:'контакт телефон позвон адрес почта email мейл где находи офис связ',a:'Отдел кадров и офис:\n📞 '+PHONE+'\n✉️ '+MAIL+'\n📍 Москва, ул. Верейская, д. 29, стр. 33\n\nРуководство:\nДиректор — +7 (495) 120-10-16\nГлавный инженер — +7 (495) 120-10-18'},
+   site:{t:'Разделы сайта',k:'сайт раздел навигац структур меню где найти что есть',a:'Структура сайта:\n\n• О компании — чем занимаемся\n• Системы — шесть направлений работ\n• Объекты — галерея и сданные проекты\n• Партнёры — логотипы и список\n• Команда — карточки руководителей с контактами\n• Вакансии — кого берём\n• Анкета — форма для соискателей\n\nПерейти можно через меню в шапке — или спросите меня о любом разделе.'},
+   docs:{t:'Документация и сдача',k:'документ исполнительн пнр опрессов балансиров паспорт зос рв сдача испытан',a:'Мы доводим системы до сдачи: промывка, опрессовка, балансировка, пусконаладка (ПНР), паспорта и исполнительные схемы для управляющей компании и заказчика. На сданных объектах указаны ЗОС (заключение о соответствии) и РВ (разрешение на ввод).'}
+  };
+  var TOPICS=['about','systems','projects','team','jobs','form','contacts','partners','site'];
+
+  function norm(s){return s.toLowerCase().replace(/ё/g,'е')}
+  function find(q){
+    q=norm(q);var best=null,sc=0;
+    Object.keys(KB).forEach(function(id){
+      var sco=0;KB[id].k.split(' ').forEach(function(w){w=norm(w).replace(/^\?/,'');if(w.length>2&&q.indexOf(w)>-1)sco+= w.length>4?2:1});
+      if(sco>sc){sc=sco;best=id}
+    });
+    return best;
+  }
+  function add(cls,html){var d=document.createElement('div');d.className='m '+cls;d.innerHTML=html;log.appendChild(d);log.scrollTop=log.scrollHeight;return d}
+  function esc(s){return s.replace(/[&<>]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})}
+
+  var talkT;
+  function talk(ms){orb.classList.add('talk');clearTimeout(talkT);talkT=setTimeout(function(){orb.classList.remove('talk')},ms)}
+
+  function reply(id){
+    var e=KB[id];
+    var d=add('bot','…');
+    talk(Math.min(500+e.a.length*14,6000));
+    setTimeout(function(){
+      d.innerHTML=e.a;
+      if(e.go){d.innerHTML+='\n\n<a href="'+e.go+'" data-go="1">Перейти к анкете →</a>'}
+      log.scrollTop=log.scrollHeight;
+    },450);
+  }
+  function ask(q){
+    add('me',esc(q));
+    var id=find(q);
+    if(/привет|здравств|добрый|hello|хай|доброе/i.test(q)&&!id){add('bot','Здравствуйте! Чем помочь? Выберите тему ниже или задайте вопрос.');talk(1500);return}
+    if(/как дела|как ты|как жизнь|что нового/i.test(q)){add('bot','Спасибо, хорошо! Готов рассказать о компании, системах, объектах и вакансиях. Что вас интересует?');talk(1800);return}
+    if(/спасиб|благодар/i.test(q)&&!id){add('bot','Пожалуйста! Обращайтесь 🙂');talk(1200);return}
+    if(/резюме|анкет|отклик|рассмотр|сколько.*дн|когда.*ответ|как долго|сколько.*ждать|сколько.*идти|срок/i.test(q)){
+      add('bot','Анкета рассматривается обычно 1–3 рабочих дня. После отправки с вами свяжется отдел кадров: '+PHONE+' или '+MAIL+'.\n\nЗаполнить анкету можно внизу сайта.\n\n<a href="#anketa" data-go="1">Перейти к анкете →</a>');
+      talk(2200);return;
+    }
+    if(id)reply(id);
+    else{add('bot','Не нашёл точного ответа. Могу рассказать про компанию, системы, объекты, вакансии, анкету или контакты — выберите тему ниже. По другим вопросам звоните: '+PHONE+'.');talk(2500)}
+  }
+
+  TOPICS.forEach(function(id){
+    var b=document.createElement('button');b.type='button';b.textContent=KB[id].t;
+    b.onclick=function(){add('me',KB[id].t);reply(id)};chips.appendChild(b);
+  });
+
+  var greetedDone=greeted;
+  function open(){ openChat(); }
+  function close(){ closeChat(); }
+  if(orb) orb.onclick=function(){wrap.classList.contains('open')?closeChat():openChat()};
+  var opClose=document.getElementById('op-close');
+  if(opClose) opClose.onclick=closeChat;
+  form.onsubmit=function(e){e.preventDefault();var q=inp.value.trim();if(!q)return;inp.value='';ask(q)};
+  log.addEventListener('click',function(e){var a=e.target.closest('a[data-go]');if(a&&window.innerWidth<=520)close()});
+
+  // глаза следят за курсором
+  var eyes=orb.querySelectorAll('.orb-eye i');
+  document.addEventListener('mousemove',function(e){
+    var r=orb.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+    var dx=e.clientX-cx,dy=e.clientY-cy,dist=Math.hypot(dx,dy)||1,m=Math.min(2.5,dist/80);
+    var x=dx/dist*m,y=dy/dist*m;
+    eyes.forEach(function(i){i.style.transform='translate('+x+'px,'+y+'px)'});
+  });
+  // подсказка исчезает через время
+})();
+</script>
+</body>
+</html>
